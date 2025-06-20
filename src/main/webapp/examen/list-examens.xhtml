@@ -1,0 +1,12 @@
+<ui:composition template="/template/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <p:dataTable var="examen" value="#{examenController.examens}">
+            <p:column headerText="ID"><h:outputText value="#{examen.id}"/></p:column>
+            <p:column headerText="Name"><h:outputText value="#{examen.nom}"/></p:column>
+        </p:dataTable>
+    </ui:define>
+</ui:composition>

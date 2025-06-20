@@ -1,0 +1,19 @@
+<ui:composition template="/template/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form>
+            <p:panel header="Add Subject">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="nom" value="Name:"/>
+                    <p:inputText id="nom" value="#{matiereController.matiere.nom}"/>
+                    <p:outputLabel for="code" value="Code:"/>
+                    <p:inputText id="code" value="#{matiereController.matiere.code}"/>
+                    <p:commandButton value="Save" action="#{matiereController.save}"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <p:menubar>
+        <p:menuitem value="Home" url="/profile.xhtml" icon="pi pi-fw pi-home"/>
+        <p:submenu label="Management" icon="pi pi-fw pi-briefcase">
+            <p:menuitem value="Users" url="/user-management.xhtml"/>
+            <p:menuitem value="Professors" url="/professeur/list-professeurs.xhtml"/>
+            <p:menuitem value="Students" url="/etudiant/list-etudiants.xhtml"/>
+            <p:menuitem value="Subjects" url="/matiere/list-matieres.xhtml"/>
+            <p:menuitem value="Exams" url="/examen/list-examens.xhtml"/>
+        </p:submenu>
+        <f:facet name="options">
+            <p:commandButton value="Logout" action="#{authController.logout}" icon="pi pi-fw pi-power-off"/>
+        </f:facet>
+    </p:menubar>
+</ui:composition>

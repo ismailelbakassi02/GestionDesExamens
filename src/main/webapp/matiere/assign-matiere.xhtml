@@ -1,0 +1,23 @@
+<ui:composition template="/template/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form>
+            <p:panel header="Assign Subject to Professor">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="prof" value="Professor:"/>
+                    <p:selectOneMenu id="prof" value="#{matiereController.professeurId}">
+                        <f:selectItems value="#{professeurController.professeurs}" var="p" itemLabel="#{p.nom}" itemValue="#{p.id}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel for="matiere" value="Subject:"/>
+                    <p:selectOneMenu id="matiere" value="#{matiereController.matiere.id}">
+                        <f:selectItems value="#{matiereController.matieres}" var="m" itemLabel="#{m.nom}" itemValue="#{m.id}" />
+                    </p:selectOneMenu>
+                    <p:commandButton value="Assign" action="#{matiereController.assign}"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
