@@ -1,41 +1,12 @@
 package com.sge.view;
 
-import com.sge.model.Note;
-import com.sge.service.NoteService;
-import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-
-import java.util.List;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
 @Named
 @RequestScoped
 public class NoteController {
-
-    @Inject
-    private NoteService noteService;
-
-    private List<Note> notes;
-    private Note note = new Note();
-
-    @PostConstruct
-    public void init() {
-        notes = noteService.findAll();
-    }
-
-    public void save() {
-        noteService.save(note);
-        note = new Note();
-        notes = noteService.findAll();
-    }
-
-    // Getters and Setters
-    public List<Note> getNotes() {
-        return notes;
-    }
-
-    public Note getNote() {
+    // Controller logic will be implemented here
         return note;
     }
 

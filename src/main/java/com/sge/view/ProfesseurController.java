@@ -1,45 +1,12 @@
 package com.sge.view;
 
-import com.sge.model.Professeur;
-import com.sge.service.ProfesseurService;
-import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-
-import java.util.List;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
 @Named
 @RequestScoped
 public class ProfesseurController {
-
-    @Inject
-    private ProfesseurService professeurService;
-
-    private List<Professeur> professeurs;
-    private Professeur professeur = new Professeur();
-
-    @PostConstruct
-    public void init() {
-        professeurs = professeurService.findAll();
-    }
-
-    public void save() {
-        professeurService.save(professeur);
-        professeur = new Professeur();
-        professeurs = professeurService.findAll();
-    }
-
-    public void update() {
-        professeurService.update(professeur);
-        professeur = new Professeur();
-        professeurs = professeurService.findAll();
-    }
-
-    public void delete(Long id) {
-        professeurService.delete(id);
-        professeurs = professeurService.findAll();
-    }
+    // Controller logic will be implemented here
 
     // Getters and Setters
     public List<Professeur> getProfesseurs() {
