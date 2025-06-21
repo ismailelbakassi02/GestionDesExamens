@@ -1,23 +1,27 @@
 package com.sge.model;
 
 import lombok.Data;
+import lombok.Generated;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
 public class Examen {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
+    private LocalDateTime dateExamen;
+    private int duree;
+    private String statut;
 
     @ManyToOne
-    @JoinColumn(name = "matiere_id")
     private Matiere matiere;
 
-    private LocalDateTime dateExamen;
-    private int duree; // in minutes
-    private String typeExamen; // CC, DS, FINAL
-    private String statut;
+    @OneToMany(mappedBy = "examen")
+    private List<Note> notes;
+
+
 }
