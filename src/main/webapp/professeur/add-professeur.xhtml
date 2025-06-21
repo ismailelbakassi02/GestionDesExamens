@@ -1,19 +1,9 @@
-<ui:composition template="/template/layout.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
-    <ui:define name="content">
-        <h:form>
-            <p:panel header="Add Professor">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <p:outputLabel for="nom" value="Last Name:"/>
-                    <p:inputText id="nom" value="#{professeurController.professeur.nom}"/>
-                    <p:outputLabel for="prenom" value="First Name:"/>
-                    <p:inputText id="prenom" value="#{professeurController.professeur.prenom}"/>
-                    <p:commandButton value="Save" action="#{professeurController.save}"/>
-                </h:panelGrid>
-            </p:panel>
-        </h:form>
-    </ui:define>
-</ui:composition>
+<h:form>
+    <p:panel header="Ajouter Professeur">
+        <p:inputText value="#{professeurController.professeur.nom}" placeholder="Nom"/>
+        <p:inputText value="#{professeurController.professeur.prenom}" placeholder="Prénom"/>
+        <p:inputText value="#{professeurController.professeur.email}" placeholder="Email"/>
+        <p:inputText value="#{professeurController.professeur.specialite}" placeholder="Spécialité"/>
+        <p:commandButton value="Enregistrer" action="#{professeurController.save}" update="@form"/>
+    </p:panel>
+</h:form>

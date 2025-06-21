@@ -1,13 +1,12 @@
-<ui:composition template="/template/layout.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
-    <ui:define name="content">
-        <p:dataTable var="prof" value="#{professeurController.professeurs}">
-            <p:column headerText="ID"><h:outputText value="#{prof.id}"/></p:column>
-            <p:column headerText="Name"><h:outputText value="#{prof.nom} #{prof.prenom}"/></p:column>
-            <p:column headerText="Email"><h:outputText value="#{prof.email}"/></p:column>
-        </p:dataTable>
-    </ui:define>
-</ui:composition>
+<h:form>
+    <p:dataTable value="#{professeurController.professeurs}" var="prof">
+        <p:column headerText="Nom">#{prof.nom}</p:column>
+        <p:column headerText="Prénom">#{prof.prenom}</p:column>
+        <p:column headerText="Email">#{prof.email}</p:column>
+        <p:column headerText="Spécialité">#{prof.specialite}</p:column>
+        <p:column>
+            <p:commandButton value="Modifier" action="#{professeurController.edit(prof)}"/>
+            <p:commandButton value="Supprimer" action="#{professeurController.delete(prof.id)}" update="@form"/>
+        </p:column>
+    </p:dataTable>
+</h:form>

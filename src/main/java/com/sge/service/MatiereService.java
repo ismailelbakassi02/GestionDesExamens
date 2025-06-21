@@ -9,15 +9,22 @@ import java.util.List;
 
 @Service
 public class MatiereService {
-
     @Autowired
-    private MatiereRepository repository;
+    private MatiereRepository matiereRepository;
 
     public List<Matiere> findAll() {
-        return repository.findAll();
+        return matiereRepository.findAll();
     }
 
     public Matiere save(Matiere matiere) {
-        return repository.save(matiere);
+        return matiereRepository.save(matiere);
+    }
+
+    public void delete(Long id) {
+        matiereRepository.deleteById(id);
+    }
+
+    public Matiere findById(Long id) {
+        return matiereRepository.findById(id).orElse(null);
     }
 }
