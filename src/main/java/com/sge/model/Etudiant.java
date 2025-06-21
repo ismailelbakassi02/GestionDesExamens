@@ -1,21 +1,26 @@
 package com.sge.model;
 
-import lombok.Data;
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
 @Entity
-@Data
-public class Etudiant {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nom;
-    private String prenom;
-    private String email;
-    private String cne;
-    private String filiere;
+@Getter
+@Setter
+public class Etudiant extends Personne {
 
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Inscription> inscriptions;
+    private String numeroEtudiant;
+    private String groupe;
+
+    @ManyToOne
+    @JoinColumn(name = "formation_id")
+    private Formation formation;
+
+    @OneToMany(mappedBy = "etudiant")
+    private List<Note> notes;
+
+    @OneToMany(mappedBy = "etudiant")
+    private List<Reclamation> reclamations;
 }
