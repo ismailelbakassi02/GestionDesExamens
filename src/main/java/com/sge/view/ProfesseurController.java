@@ -1,23 +1,42 @@
 package com.sge.view;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import com.sge.model.Professeur;
+import com.sge.service.ProfesseurService;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
+import java.io.Serializable;
+import java.util.List;
 
 @Named
-@RequestScoped
-public class ProfesseurController {
-    // Controller logic will be implemented here
+@ViewScoped
+@Getter
+@Setter
+public class ProfesseurController implements Serializable {
 
-    // Getters and Setters
-    public List<Professeur> getProfesseurs() {
-        return professeurs;
+    @Autowired
+    private ProfesseurService professeurService;
+
+    private List<Professeur> professeurs;
+    private Professeur professeur = new Professeur();
+
+    @PostConstruct
+    public void init() {
+        professeurs = professeurService.findAll();
     }
 
-    public Professeur getProfesseur() {
-        return professeur;
+    public void save() {
+        professeurService.save(professeur);
+        professeurs = professeurService.findAll(); // Refresh the list
+        professeur = new Professeur(); // Reset the form
     }
 
-    public void setProfesseur(Professeur professeur) {
-        this.professeur = professeur;
+    public void delete(Long id) {
+        professeurService.delete(id);
+        professeurs = professeurService.findAll(); // Refresh the list
     }
 }

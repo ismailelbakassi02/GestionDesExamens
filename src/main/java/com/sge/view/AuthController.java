@@ -1,7 +1,7 @@
 package com.sge.view;
 
-import com.sge.model.User;
-import com.sge.service.UserService;
+import com.sge.model.Etudiant;
+import com.sge.repository.EtudiantRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
@@ -24,14 +25,17 @@ import java.io.Serializable;
 public class AuthController implements Serializable {
 
     @Autowired
-    private UserService userService;
+    private EtudiantRepository etudiantRepository;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private String email;
     private String password;
-    private User user = new User();
+    private Etudiant etudiant = new Etudiant();
 
     public String login() {
         try {
@@ -48,7 +52,8 @@ public class AuthController implements Serializable {
 
     public String register() {
         try {
-            userService.save(user);
+            etudiant.setPassword(passwordEncoder.encode(etudiant.getPassword()));
+            etudiantRepository.save(etudiant);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Registration Successful", "You can now log in."));
             return "/login.xhtml?faces-redirect=true";
