@@ -1,11 +1,98 @@
-<ui:composition template="/template/layout.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+<!DOCTYPE html>
+<html xmlns="[http://www.w3.org/1999/xhtml](http://www.w3.org/1999/xhtml)"
+      xmlns:h="[http://java.sun.com/jsf/html](http://java.sun.com/jsf/html)"
+      xmlns:ui="[http://java.sun.com/jsf/facelets](http://java.sun.com/jsf/facelets)"
+      xmlns:p="[http://primefaces.org/ui](http://primefaces.org/ui)" xmlns:f="http://java.sun.com/xml/ns/javaee">
+
+<ui:composition template="/template/layout.xhtml">
+    <ui:define name="title">Tableau de bord Étudiant</ui:define>
+
     <ui:define name="content">
-        <p:panel header="Student Dashboard">
-            <h:outputText value="Welcome, Student #{authController.currentUser.prenom}"/>
-        </p:panel>
+        <p:card>
+            <f:facet name="title">Bienvenue sur votre tableau de bord, Étudiant!</f:facet>
+            <f:facet name="subtitle">Vue d'ensemble de vos informations et inscriptions.</f:facet>
+
+            <h:panelGroup layout="block" styleClass="dashboard-section">
+                <h3>Mes Informations Personnelles</h3>
+                <!-- Assuming a method to get the current authenticated student, e.g., authController.currentEtudiant -->
+                <!-- For now, this is a placeholder or would be linked to a specific student if this page is rendered per student -->
+                <p:messages id="dashboardMessages" showDetail="true" closable="true"/>
+                <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank info-grid">
+                    <h:outputText value="Nom complet:"/>
+                    <h:outputText value="[Nom Prénom de l'Étudiant]"/> <!-- Replace with actual data -->
+
+                    <h:outputText value="Email:"/>
+                    <h:outputText value="[Email de l'Étudiant]"/> <!-- Replace with actual data -->
+
+                    <h:outputText value="CNE:"/>
+                    <h:outputText value="[CNE de l'Étudiant]"/> <!-- Replace with actual data -->
+
+                    <h:outputText value="Filière:"/>
+                    <h:outputText value="[Filière de l'Étudiant]"/> <!-- Replace with actual data -->
+                </p:panelGrid>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="dashboard-section">
+                <h3>Mes Inscriptions aux Matières</h3>
+                <!-- Display inscriptions for the current student -->
+                <p:dataTable var="inscription" value="#{inscriptionController.inscriptionsByCurrentEtudiant}" emptyMessage="Vous n'êtes inscrit à aucune matière pour le moment.">
+                    <p:column headerText="Matière">
+                        <h:outputText value="#{inscription.matiere.nom}"/>
+                    </p:column>
+                    <p:column headerText="Code Matière">
+                        <h:outputText value="#{inscription.matiere.code}"/>
+                    </p:column>
+                    <p:column headerText="Professeur">
+                        <h:outputText value="#{inscription.matiere.professeur.nom} #{inscription.matiere.professeur.prenom}"/>
+                    </p:column>
+                    <p:column headerText="Date d'Inscription">
+                        <h:outputText value="#{inscription.dateInscription}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="dashboard-section">
+                <h3>Prochains Examens</h3>
+                <!-- This would pull data from Hamza's module -->
+                <p:messages id="examMessages" showDetail="true" closable="true"/>
+                <p:dataTable emptyMessage="Aucun examen prochainement.">
+                    <p:column headerText="Matière">
+                        <h:outputText value="[Nom Matière]"/>
+                    </p:column>
+                    <p:column headerText="Nom Examen">
+                        <h:outputText value="[Nom Examen]"/>
+                    </p:column>
+                    <p:column headerText="Date & Heure">
+                        <h:outputText value="[Date & Heure]"/>
+                    </p:column>
+                    <p:column headerText="Durée">
+                        <h:outputText value="[Durée]"/>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="dashboard-section">
+                <h3>Mes Dernières Notes</h3>
+                <!-- This would pull data from Hamza's module -->
+                <p:messages id="noteMessages" showDetail="true" closable="true"/>
+                <p:dataTable emptyMessage="Aucune note disponible pour le moment.">
+                    <p:column headerText="Examen">
+                        <h:outputText value="[Nom Examen]"/>
+                    </p:column>
+                    <p:column headerText="Matière">
+                        <h:outputText value="[Nom Matière]"/>
+                    </p:column>
+                    <p:column headerText="Note">
+                        <h:outputText value="[Note]"/>
+                    </p:column>
+                    <p:column headerText="Date de Saisie">
+                        <h:outputText value="[Date de Saisie]"/>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+        </p:card>
     </ui:define>
 </ui:composition>
+</html>

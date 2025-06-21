@@ -1,5 +1,7 @@
 package com.sge.view;
 
+import com.sge.model.Note;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
@@ -7,7 +9,7 @@ import javax.inject.Named;
 @RequestScoped
 public class NoteController {
     // Controller logic will be implemented here
-        return note;
+        return note;n -b
     }
 
     public void setNote(Note note) {

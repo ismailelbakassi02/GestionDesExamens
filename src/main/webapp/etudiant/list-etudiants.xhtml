@@ -1,13 +1,67 @@
-<ui:composition template="/template/layout.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/xml/ns/javaee">
+
+<ui:composition template="/template/layout.xhtml">
+    <ui:define name="title">Liste des Étudiants</ui:define>
+
     <ui:define name="content">
-        <p:dataTable var="etudiant" value="#{etudiantController.etudiants}">
-            <p:column headerText="ID"><h:outputText value="#{etudiant.id}"/></p:column>
-            <p:column headerText="Name"><h:outputText value="#{etudiant.nom} #{etudiant.prenom}"/></p:column>
-            <p:column headerText="CNE"><h:outputText value="#{etudiant.cne}"/></p:column>
-        </p:dataTable>
+        <h:form id="etudiantListForm">
+            <p:card>
+                <f:facet name="title">Gestion des Étudiants</f:facet>
+                <f:facet name="subtitle">Liste de tous les étudiants enregistrés</f:facet>
+
+                <p:dataTable var="etudiant" value="#{etudiantController.etudiants}" rows="10" paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15"
+                             selectionMode="single" selection="#{etudiantController.selectedEtudiant}" rowKey="#{etudiant.id}">
+
+                    <p:ajax event="rowSelect" listener="#{etudiantController.onRowSelect}" update="messages"/>
+
+                    <p:column headerText="ID">
+                        <h:outputText value="#{etudiant.id}"/>
+                    </p:column>
+                    <p:column headerText="Nom">
+                        <h:outputText value="#{etudiant.nom}"/>
+                    </p:column>
+                    <p:column headerText="Prénom">
+                        <h:outputText value="#{etudiant.prenom}"/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{etudiant.email}"/>
+                    </p:column>
+                    <p:column headerText="CNE">
+                        <h:outputText value="#{etudiant.cne}"/>
+                    </p:column>
+                    <p:column headerText="Filière">
+                        <h:outputText value="#{etudiant.filiere}"/>
+                    </p:column>
+                    <p:column headerText="Actions">
+                        <p:commandButton icon="pi pi-pencil" title="Modifier" oncomplete="PF('editEtudiantDialog').show()" update=":editEtudiantForm" action="#{etudiantController.setSelectedEtudiant(etudiant)}">
+                            <f:setPropertyActionListener value="#{etudiant}" target="#{etudiantController.selectedEtudiant}" />
+                        </p:commandButton>
+                        <p:commandButton icon="pi pi-trash" title="Supprimer" action="#{etudiantController.deleteEtudiant(etudiant.id)}" update="@form,messages">
+                            <p:confirm header="Confirmation de suppression" message="Êtes-vous sûr de vouloir supprimer cet étudiant?" icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:commandButton value="Ajouter un nouvel étudiant" icon="pi pi-plus" styleClass="ui-button-success" onclick="PF('addEtudiantDialog').show()" />
+            </p:card>
+        </h:form>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+            <p:button value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+            <p:button value="Oui" type="button" styleClass="ui-confirmdialog-yes" />
+        </p:confirmDialog>
+
+        <!-- Include Add Etudiant Dialog -->
+        <ui:include src="add-etudiant.xhtml"/>
+        <!-- Include Edit Etudiant Dialog -->
+        <ui:include src="edit-etudiant.xhtml"/>
+
     </ui:define>
 </ui:composition>
+</html>

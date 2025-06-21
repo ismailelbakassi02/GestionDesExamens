@@ -20,4 +20,8 @@ public class MatiereService {
     public Matiere save(Matiere matiere) {
         return repository.save(matiere);
     }
+
+    public List<Matiere> getAllMatieres() {
+        return null;
+    }
 }

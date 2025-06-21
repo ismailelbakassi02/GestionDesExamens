@@ -1,3 +1,353 @@
-body {
-    font-family: Arial, sans-serif;
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Inter', sans-serif; /* Using Inter as per instructions */
+    background-color: var(--surface-b); /* PrimeFaces default background */
+    color: var(--text-color);
+}
+
+.layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Topbar Styling */
+.layout-topbar {
+    background-color: var(--surface-a); /* PrimeFaces default topbar background */
+    color: var(--text-color);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    margin-right: auto; /* Pushes button to the right */
+}
+
+.app-logo {
+    height: 2.5rem; /* Adjust as needed */
+    margin-right: 0.75rem;
+    border-radius: 4px;
+}
+
+.app-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.layout-topbar-button {
+    background: transparent;
+    border: none;
+    color: var(--text-color-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.layout-topbar-button:hover {
+    background-color: var(--surface-c);
+}
+
+/* Sidebar Styling */
+.layout-sidebar {
+    background-color: var(--surface-a);
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.08);
+    width: 280px; /* Default width for sidebar */
+    padding-top: 1rem;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.layout-sidebar .ui-menu {
+    border: none;
+    background: transparent;
+    padding: 0.5rem 0;
+}
+
+.layout-sidebar .ui-menuitem-link {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    margin: 0 0.75rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.layout-sidebar .ui-menuitem-link:hover {
+    background-color: var(--surface-c);
+    color: var(--primary-color);
+}
+
+.layout-sidebar .ui-menuitem-link .ui-icon {
+    margin-right: 0.75rem;
+}
+
+/* Content Area */
+.layout-content-wrapper {
+    flex-grow: 1;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: flex-start; /* Align content to the top vertically */
+}
+
+.layout-content {
+    width: 100%;
+    max-width: 1200px; /* Max width for content, adjust as needed */
+    padding: 1.5rem;
+    background-color: var(--surface-e); /* A slightly different background for the main content area */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* PrimeFaces Card adjustments for better aesthetics */
+.ui-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* Ensures rounded corners apply to internal elements too */
+}
+
+.ui-card .ui-card-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--primary-color-text);
+    padding: 1rem 1.5rem;
+    background-color: var(--primary-color);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.ui-card .ui-card-subtitle {
+    font-size: 1rem;
+    color: var(--text-color-secondary);
+    padding: 0.5rem 1.5rem 1rem;
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
+}
+
+.ui-card .ui-card-content {
+    padding: 1.5rem;
+}
+
+/* DataTable Styling */
+.ui-datatable {
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+    overflow: hidden; /* For rounded corners */
+}
+
+.ui-datatable .ui-datatable-thead > tr > th {
+    background-color: var(--surface-c);
+    color: var(--text-color);
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    border-color: var(--surface-border);
+}
+
+.ui-datatable .ui-datatable-tbody > tr > td {
+    padding: 0.75rem 1rem;
+    border-color: var(--surface-border);
+}
+
+.ui-datatable .ui-datatable-tbody > tr:nth-child(even) {
+    background-color: var(--surface-b);
+}
+
+.ui-datatable .ui-datatable-tbody > tr:hover {
+    background-color: var(--surface-d);
+    cursor: pointer;
+}
+
+/* Button Styling (PrimeFaces defaults are generally good, but can be customized) */
+.ui-button {
+    border-radius: 6px;
+    padding: 0.75rem 1.25rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ui-button.ui-button-success {
+    background-color: var(--green-500);
+    color: var(--primary-color-text);
+    border-color: var(--green-500);
+}
+.ui-button.ui-button-success:hover {
+    background-color: var(--green-600);
+    border-color: var(--green-600);
+}
+
+.ui-button.ui-button-primary {
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
+    border-color: var(--primary-color);
+}
+.ui-button.ui-button-primary:hover {
+    background-color: var(--primary-dark-color);
+    border-color: var(--primary-dark-color);
+}
+
+.ui-button.ui-button-secondary {
+    background-color: var(--surface-400);
+    color: var(--text-color);
+    border-color: var(--surface-400);
+}
+.ui-button.ui-button-secondary:hover {
+    background-color: var(--surface-500);
+    border-color: var(--surface-500);
+}
+
+.ui-button-icon-only {
+    padding: 0.5rem; /* Adjust padding for icon-only buttons */
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-flex; /* Ensures it's a square */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Dialog Styling */
+.ui-dialog {
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 1rem 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: 1.5rem;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--surface-border);
+    background-color: var(--surface-b);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/* Form Grid Styling */
+.form-grid.ui-panelgrid-blank .ui-grid-col-2,
+.form-grid.ui-panelgrid-blank .ui-grid-col-10,
+.form-grid { /* For PrimeFaces 12, use ui-fluid directly or grid classes */
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr; /* Label on left, input on right */
+    gap: 1rem; /* Space between rows and columns */
+    align-items: center;
+}
+
+.form-grid .ui-outputlabel {
+    font-weight: 500;
+    text-align: right; /* Align labels to the right */
+    padding-right: 1rem;
+}
+
+.form-grid .ui-inputfield,
+.form-grid .ui-selectonemenu {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--surface-border);
+    padding: 0.6rem 0.75rem;
+    box-sizing: border-box; /* Include padding in width */
+}
+
+/* Messages */
+.ui-messages {
+    margin-bottom: 1rem;
+    border-radius: 6px;
+}
+
+/* Footer Styling */
+.layout-footer {
+    padding: 1rem 1.5rem;
+    text-align: center;
+    color: var(--text-color-secondary);
+    background-color: var(--surface-a);
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.08);
+    margin-top: auto; /* Pushes footer to the bottom */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* Dashboard Specific Styles */
+.dashboard-section {
+    background-color: var(--surface-e);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-section h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    border-bottom: 1px solid var(--surface-border);
+    padding-bottom: 0.5rem;
+}
+
+.info-grid {
+    grid-template-columns: 150px 1fr; /* Adjust for info-grid specifically */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 991px) {
+    .layout-topbar-button {
+        display: flex; /* Show the menu toggle button */
+    }
+
+    .layout-sidebar {
+        position: fixed;
+        height: 100%;
+        z-index: 999;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .ui-sidebar-active .layout-sidebar {
+        transform: translateX(0);
+    }
+
+    .layout-content-wrapper {
+        padding: 1rem;
+    }
+
+    .layout-content {
+        padding: 1rem;
+    }
+
+    .form-grid.ui-panelgrid-blank {
+        grid-template-columns: 1fr; /* Stack labels and inputs on small screens */
+    }
+
+    .form-grid .ui-outputlabel {
+        text-align: left; /* Align labels to the left on small screens */
+        padding-right: 0;
+    }
 }

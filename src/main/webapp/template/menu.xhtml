@@ -1,18 +1,44 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
-    <p:menubar>
-        <p:menuitem value="Home" url="/profile.xhtml" icon="pi pi-fw pi-home"/>
-        <p:submenu label="Management" icon="pi pi-fw pi-briefcase">
-            <p:menuitem value="Users" url="/user-management.xhtml"/>
-            <p:menuitem value="Professors" url="/professeur/list-professeurs.xhtml"/>
-            <p:menuitem value="Students" url="/etudiant/list-etudiants.xhtml"/>
-            <p:menuitem value="Subjects" url="/matiere/list-matieres.xhtml"/>
-            <p:menuitem value="Exams" url="/examen/list-examens.xhtml"/>
+<!DOCTYPE html>
+<html xmlns="[http://www.w3.org/1999/xhtml](http://www.w3.org/1999/xhtml)"
+      xmlns:h="[http://java.sun.com/jsf/html](http://java.sun.com/jsf/html)"
+      xmlns:ui="[http://java.sun.com/jsf/facelets](http://java.sun.com/jsf/facelets)"
+      xmlns:p="[http://primefaces.org/ui](http://primefaces.org/ui)">
+
+<h:body>
+    <p:menu>
+        <p:submenu label="Accueil" icon="pi pi-home">
+            <p:menuitem value="Tableau de bord" outcome="/dashboard-etudiant" icon="pi pi-chart-bar"/>
         </p:submenu>
-        <f:facet name="options">
-            <p:commandButton value="Logout" action="#{authController.logout}" icon="pi pi-fw pi-power-off"/>
-        </f:facet>
-    </p:menubar>
-</ui:composition>
+
+        <p:submenu label="Étudiants" icon="pi pi-users">
+            <p:menuitem value="Liste des Étudiants" outcome="/etudiant/list-etudiants" icon="pi pi-list"/>
+            <p:menuitem value="Ajouter un Étudiant" outcome="/etudiant/add-etudiant" icon="pi pi-plus"/>
+        </p:submenu>
+
+        <p:submenu label="Inscriptions" icon="pi pi-user-plus">
+            <p:menuitem value="Gérer les Inscriptions" outcome="/inscription/manage-inscriptions" icon="pi pi-pencil"/>
+        </p:submenu>
+
+        <!-- Example for other modules (Auth, Professeur, Examen) -->
+        <!-- This would ideally be conditionally rendered based on user role -->
+        <p:submenu label="Professeurs" icon="pi pi-briefcase" rendered="#{authController.isAdmin()}">
+            <p:menuitem value="Liste Professeurs" outcome="/professeur/list-professeurs" icon="pi pi-list"/>
+            <p:menuitem value="Ajouter Professeur" outcome="/professeur/add-professeur" icon="pi pi-plus"/>
+        </p:submenu>
+        <p:submenu label="Matières" icon="pi pi-book" rendered="#{authController.isAdmin() or authController.isProfesseur()}">
+            <p:menuitem value="Liste Matières" outcome="/matiere/list-matieres" icon="pi pi-list"/>
+            <p:menuitem value="Attribuer Matières" outcome="/matiere/assign-matiere" icon="pi pi-link"/>
+        </p:submenu>
+        <p:submenu label="Examens" icon="pi pi-calendar" rendered="#{authController.isProfesseur()}">
+            <p:menuitem value="Planification Examens" outcome="/examen/planning-examens" icon="pi pi-calendar-plus"/>
+            <p:menuitem value="Saisie des Notes" outcome="/note/saisie-notes" icon="pi pi-file-excel"/>
+        </p:submenu>
+        <p:submenu label="Notes" icon="pi pi-percentage">
+            <p:menuitem value="Consulter Notes" outcome="/note/consultation-notes" icon="pi pi-search"/>
+            <p:menuitem value="Relevé de Notes" outcome="/note/releve-notes" icon="pi pi-file-pdf"/>
+        </p:submenu>
+        <p:separator/>
+        <p:menuitem value="Déconnexion" action="#{authController.logout()}" icon="pi pi-sign-out"/>
+    </p:menu>
+</h:body>
+</html>

@@ -1,19 +1,40 @@
-<ui:composition template="/template/layout.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
-    <ui:define name="content">
-        <h:form>
-            <p:panel header="Edit Student">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <p:outputLabel for="nom" value="Last Name:"/>
-                    <p:inputText id="nom" value="#{etudiantController.etudiant.nom}"/>
-                    <p:outputLabel for="prenom" value="First Name:"/>
-                    <p:inputText id="prenom" value="#{etudiantController.etudiant.prenom}"/>
-                    <p:commandButton value="Update" action="#{etudiantController.update}"/>
-                </h:panelGrid>
-            </p:panel>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/xml/ns/javaee">
+
+<h:body>
+    <p:dialog header="Modifier l'Étudiant" widgetVar="editEtudiantDialog" modal="true" responsive="true">
+        <h:form id="editEtudiantForm">
+            <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-grid">
+                <p:outputLabel for="editNom" value="Nom:"/>
+                <p:inputText id="editNom" value="#{etudiantController.selectedEtudiant.nom}" required="true" requiredMessage="Le nom est requis."/>
+
+                <p:outputLabel for="editPrenom" value="Prénom:"/>
+                <p:inputText id="editPrenom" value="#{etudiantController.selectedEtudiant.prenom}" required="true" requiredMessage="Le prénom est requis."/>
+
+                <p:outputLabel for="editEmail" value="Email:"/>
+                <p:inputText id="editEmail" value="#{etudiantController.selectedEtudiant.email}" required="true" requiredMessage="L'email est requis." validatorMessage="Format d'email invalide.">
+                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                </p:inputText>
+
+                <p:outputLabel for="editCne" value="CNE:"/>
+                <p:inputText id="editCne" value="#{etudiantController.selectedEtudiant.cne}" required="true" requiredMessage="Le CNE est requis."/>
+
+                <p:outputLabel for="editFiliere" value="Filière:"/>
+                <p:inputText id="editFiliere" value="#{etudiantController.selectedEtudiant.filiere}" required="true" requiredMessage="La filière est requise."/>
+            </p:panelGrid>
+
+            <f:facet name="footer">
+                <p:commandButton value="Mettre à jour" action="#{etudiantController.updateEtudiant()}"
+                                 update=":etudiantListForm:etudiantListForm @form messages"
+                                 oncomplete="if (!args.validationFailed) { PF('editEtudiantDialog').hide(); }"
+                                 icon="pi pi-save" styleClass="ui-button-primary"/>
+                <p:commandButton value="Annuler" type="button" onclick="PF('editEtudiantDialog').hide()"
+                                 icon="pi pi-times" styleClass="ui-button-secondary"/>
+            </f:facet>
         </h:form>
-    </ui:define>
-</ui:composition>
+    </p:dialog>
+</h:body>
+</html>
