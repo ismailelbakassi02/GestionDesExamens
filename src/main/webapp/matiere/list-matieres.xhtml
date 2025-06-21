@@ -1,13 +1,12 @@
-<ui:composition template="/template/layout.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
-    <ui:define name="content">
-        <p:dataTable var="matiere" value="#{matiereController.matieres}">
-            <p:column headerText="ID"><h:outputText value="#{matiere.id}"/></p:column>
-            <p:column headerText="Name"><h:outputText value="#{matiere.nom}"/></p:column>
-            <p:column headerText="Code"><h:outputText value="#{matiere.code}"/></p:column>
-        </p:dataTable>
-    </ui:define>
-</ui:composition>
+<h:form>
+    <p:dataTable value="#{matiereController.matieres}" var="mat">
+        <p:column headerText="Nom">#{mat.nom}</p:column>
+        <p:column headerText="Code">#{mat.code}</p:column>
+        <p:column headerText="Coefficient">#{mat.coefficient}</p:column>
+        <p:column headerText="Professeur">#{mat.professeur.nom} #{mat.professeur.prenom}</p:column>
+        <p:column>
+            <p:commandButton value="Modifier" action="#{matiereController.edit(mat)}"/>
+            <p:commandButton value="Supprimer" action="#{matiereController.delete(mat.id)}" update="@form"/>
+        </p:column>
+    </p:dataTable>
+</h:form>

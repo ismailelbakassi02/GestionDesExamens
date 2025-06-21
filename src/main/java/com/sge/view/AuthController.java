@@ -1,31 +1,66 @@
 package com.sge.view;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Named;
+import com.sge.model.Etudiant;
+import com.sge.repository.EtudiantRepository;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+import java.io.Serializable;
 
 @Named
 @RequestScoped
-public class AuthController {
-    // Controller logic will be implemented here
+@Getter
+@Setter
+public class AuthController implements Serializable {
+
+    @Autowired
+    private EtudiantRepository etudiantRepository;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    private String email;
+    private String password;
+    private Etudiant etudiant = new Etudiant();
+
+    public String login() {
+        try {
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(this.email, this.password);
+            Authentication authentication = authenticationManager.authenticate(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return "/index.xhtml?faces-redirect=true";
+        } catch (AuthenticationException e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Error", "Invalid credentials."));
+            return null;
+        }
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public String register() {
+        try {
+            etudiant.setPassword(passwordEncoder.encode(etudiant.getPassword()));
+            etudiantRepository.save(etudiant);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Registration Successful", "You can now log in."));
+            return "/login.xhtml?faces-redirect=true";
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registration Error", "Email may already be in use."));
+            return null;
+        }
     }
 }

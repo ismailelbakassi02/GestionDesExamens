@@ -1,23 +1,44 @@
 package com.sge.model;
 
-import lombok.Data;
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Date;
+import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Examen {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nom;
+
+    private Date date;
+    private int duree; // in minutes
+    private String statut;
 
     @ManyToOne
-    @JoinColumn(name = "matiere_id")
-    private Matiere matiere;
+    @JoinColumn(name = "session_examen_id")
+    private SessionExamen sessionExamen;
 
-    private LocalDateTime dateExamen;
-    private int duree; // in minutes
-    private String typeExamen; // CC, DS, FINAL
-    private String statut;
+    @OneToOne
+    @JoinColumn(name = "module_id", referencedColumnName = "id")
+    private Module module;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sujet_examen_id", referencedColumnName = "id")
+    private SujetExamen sujetExamen;
+
+    @ManyToOne
+    @JoinColumn(name = "salle_id")
+    private Salle salle;
+
+    @ManyToMany(mappedBy = "examensSurveilles")
+    private List<Professeur> surveillants;
+
+    @OneToMany(mappedBy = "examen")
+    private List<Note> notes;
 }

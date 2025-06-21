@@ -1,18 +1,37 @@
 package com.sge.view;
 
-import javax.enterprise.context.RequestScoped;
+import com.sge.model.Etudiant;
+import com.sge.service.EtudiantService;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.Serializable;
+import java.util.List;
 
 @Named
-@RequestScoped
-public class EtudiantController {
-    // Controller logic will be implemented here
+@ViewScoped
+@Getter
+@Setter
+public class EtudiantController implements Serializable {
 
-    public Etudiant getEtudiant() {
-        return etudiant;
+    @Autowired
+    private EtudiantService etudiantService;
+
+    private List<Etudiant> etudiants;
+    private Etudiant etudiant = new Etudiant();
+
+    @PostConstruct
+    public void init() {
+        etudiants = etudiantService.findAll();
     }
 
-    public void setEtudiant(Etudiant etudiant) {
-        this.etudiant = etudiant;
+    public void save() {
+        etudiantService.save(etudiant);
+        etudiants = etudiantService.findAll(); // Refresh the list
+        etudiant = new Etudiant(); // Reset the form
     }
 }

@@ -1,15 +1,23 @@
 package com.sge.model;
 
+<<<<<<< HEAD
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.io.Serializable;
+=======
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+>>>>>>> 8ecbe6009a04f5d74624a17d461e3aa0b0cd7da1
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+<<<<<<< HEAD
 public class Etudiant implements Serializable {
 
     @Id
@@ -118,3 +126,22 @@ public class Etudiant implements Serializable {
                 '}';
     }
 }
+=======
+@Getter
+@Setter
+public class Etudiant extends Personne {
+
+    private String numeroEtudiant;
+    private String groupe;
+
+    @ManyToOne
+    @JoinColumn(name = "formation_id")
+    private Formation formation;
+
+    @OneToMany(mappedBy = "etudiant")
+    private List<Note> notes;
+
+    @OneToMany(mappedBy = "etudiant")
+    private List<Reclamation> reclamations;
+}
+>>>>>>> 8ecbe6009a04f5d74624a17d461e3aa0b0cd7da1

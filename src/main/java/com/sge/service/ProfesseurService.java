@@ -9,15 +9,22 @@ import java.util.List;
 
 @Service
 public class ProfesseurService {
-
     @Autowired
-    private ProfesseurRepository repository;
+    private ProfesseurRepository professeurRepository;
 
     public List<Professeur> findAll() {
-        return repository.findAll();
+        return professeurRepository.findAll();
     }
 
     public Professeur save(Professeur professeur) {
-        return repository.save(professeur);
+        return professeurRepository.save(professeur);
+    }
+
+    public void delete(Long id) {
+        professeurRepository.deleteById(id);
+    }
+
+    public Professeur findById(Long id) {
+        return professeurRepository.findById(id).orElse(null);
     }
 }

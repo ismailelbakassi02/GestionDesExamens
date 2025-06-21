@@ -1,25 +1,178 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Register</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Create Account - Register</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .registration-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .registration-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #333;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .ui-inputfield {
+            width: 100%;
+            padding: 15px !important;
+            border: 2px solid #e1e5e9 !important;
+            border-radius: 12px !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease;
+            background: #fff !important;
+        }
+
+        .ui-inputfield:focus {
+            outline: none !important;
+            border-color: #667eea !important;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </h:head>
 <h:body>
-    <h:form>
-        <p:panel header="Register">
-            <h:panelGrid columns="2" cellpadding="5">
-                <p:outputLabel for="nom" value="Last Name:"/>
-                <p:inputText id="nom" value="#{userController.user.nom}"/>
-                <p:outputLabel for="prenom" value="First Name:"/>
-                <p:inputText id="prenom" value="#{userController.user.prenom}"/>
-                <p:outputLabel for="email" value="Email:"/>
-                <p:inputText id="email" value="#{userController.user.email}"/>
-                <p:outputLabel for="password" value="Password:"/>
-                <p:password id="password" value="#{userController.user.password}"/>
-                <p:commandButton value="Register" action="#{userController.save}"/>
-            </h:panelGrid>
-        </p:panel>
-    </h:form>
+    <div class="registration-container">
+        <div class="logo">
+            <h1>Welcome</h1>
+            <p>Create your account to get started</p>
+        </div>
+
+        <h:form id="registrationForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <h:outputLabel for="firstName" value="First Name"/>
+                    <p:inputText id="firstName" value="#{authController.etudiant.prenom}" required="true"/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="lastName" value="Last Name"/>
+                    <p:inputText id="lastName" value="#{authController.etudiant.nom}" required="true"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h:outputLabel for="email" value="Email Address"/>
+                <p:inputText id="email" value="#{authController.etudiant.email}" required="true"/>
+            </div>
+
+            <div class="form-group">
+                <h:outputLabel for="password" value="Password"/>
+                <p:password id="password" value="#{authController.etudiant.password}" required="true"/>
+            </div>
+
+            <p:commandButton styleClass="submit-btn" value="Create Account" action="#{authController.register}"/>
+            
+            <div class="login-link">
+                Already have an account? <h:link outcome="login">Sign in here</h:link>
+            </div>
+        </h:form>
+    </div>
 </h:body>
 </html>

@@ -9,25 +9,23 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class Note {
+public class Reclamation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double valeur;
-    private String commentaire;
-    private Date dateModification;
-    private boolean estValidee;
+    private String description;
+    private String statut;
+    private Date dateCreation;
+    private Date dateTraitement;
+    private String reponse;
+
+    @OneToOne
+    @JoinColumn(name = "note_id", referencedColumnName = "id")
+    private Note note;
 
     @ManyToOne
     @JoinColumn(name = "etudiant_id")
     private Etudiant etudiant;
-
-    @ManyToOne
-    @JoinColumn(name = "examen_id")
-    private Examen examen;
-
-    @OneToOne(mappedBy = "note")
-    private Reclamation reclamation;
 }

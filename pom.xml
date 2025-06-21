@@ -57,6 +57,7 @@
         <dependency>
             <groupId>org.joinfaces</groupId>
             <artifactId>jsf-spring-boot-starter</artifactId>
+<<<<<<< HEAD
             <version>${joinfaces.version}</version>
             <exclusions>
                 <exclusion>
@@ -64,6 +65,9 @@
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
             </exclusions>
+=======
+            <version>4.7.12</version>
+>>>>>>> 8ecbe6009a04f5d74624a17d461e3aa0b0cd7da1
         </dependency>
 
         <!-- PrimeFaces -->
@@ -82,12 +86,21 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+<<<<<<< HEAD
             <version>${mysql.connector.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
+=======
+            <version>8.0.30</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+>>>>>>> 8ecbe6009a04f5d74624a17d461e3aa0b0cd7da1
         </dependency>
 
         <!-- Utilities -->
