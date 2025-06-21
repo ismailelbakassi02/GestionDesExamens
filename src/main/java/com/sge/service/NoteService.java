@@ -9,15 +9,19 @@ import java.util.List;
 
 @Service
 public class NoteService {
-
     @Autowired
-    private NoteRepository repository;
+    private NoteRepository noteRepository;
 
-    public List<Note> findAll() {
-        return repository.findAll();
+    public Note saisirNote(Note note) {
+        return noteRepository.save(note);
     }
 
-    public Note save(Note note) {
-        return repository.save(note);
+    public List<Note> getNotesByEtudiant(Long etudiantId) {
+        return noteRepository.findByEtudiantId(etudiantId);
+    }
+
+    public double calculerMoyenne(Long etudiantId, Long matiereId) {
+        List<Note> notes = noteRepository.findByEtudiantIdAndExamen_Matiere_Id(etudiantId, matiereId);
+        return notes.stream().mapToDouble(Note::getNote).average().orElse(0.0);
     }
 }
